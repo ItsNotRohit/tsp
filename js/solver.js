@@ -1,5 +1,9 @@
 var info = document.getElementById('info');
 
+var n = nodes.length;
+var d1 = new Array(n);
+var dist = new Array(n);
+
 function approximate(path, n, d) {
     if (path.length === n) {
         return 0;
@@ -49,17 +53,21 @@ function nextState(state, next, n, d) {
     nextState.approximation = nextState.length + approximate(nextState.path, n, d);
     return nextState;
 }
-
+//step 1
 function solvePlanar(solver) {
     var nodes = graph.nodes;
     var n = nodes.length;
     var d = new Array(n);
     for (var i = 0; i < n; i++) {
         d[i] = new Array(n);
+        d1[i] = new Array(n);
         for (var j = 0; j < n; j++) {
+            // console.log(x);
             var dx = nodes.get(i).x - nodes.get(j).x;
             var dy = nodes.get(i).y - nodes.get(j).y;
             d[i][j] = Math.sqrt(dx * dx + dy * dy);
+            d1[i][j] = Math.sqrt(dx * dx + dy * dy);
+            // console.log(d[i][j]);
         }
     }
     solver(n, d);
@@ -73,6 +81,7 @@ function reset() {
 }
 
 function solveBranchAndBound(n, d) {
+    console.log(d1);
     stopAnimation();
     reset();
     var queue = new TinyQueue([], function (a, b) {
@@ -108,6 +117,7 @@ function solveBranchAndBound(n, d) {
         current.used = true;
         if (current.id !== current.prevId) {
             setTimeout(function (state) {
+                // console.log(state);
                 displayState(state);
                 var dist = tree.nodes.get(state.prevId).distance;
                 var position = treeNetwork.getPositions([state.prevId])[state.prevId];
@@ -118,7 +128,7 @@ function solveBranchAndBound(n, d) {
                     state: state,
                     x: x,
                     y: y,
-                    distance: dist * 0.8,
+                    distance: dist * .800,
                     label: '' + state.path[state.path.length - 1]
                 });
                 tree.edges.add({from: state.id, to: state.prevId});
@@ -148,6 +158,7 @@ function solveBranchAndBound(n, d) {
             }
             continue;
         }
+
         var unused = [];
         for (var i = 0; i < n; i++) if (current.path.indexOf(i) === -1) unused.push(i);
         for (var j = 0; j < unused.length; j++) {
@@ -161,6 +172,7 @@ function solveBranchAndBound(n, d) {
             //tree.edges.add({from: current.id, to: state.prevId});
         }
     }
+    
     setTimeout(displayState, delay, result);
     for (var i = 0; i < states.length; i++) {
         var state = states[i];
@@ -269,18 +281,37 @@ treeNetwork.on('click', function (param) {
 });
 
 function displayPath(path) {
+    // console.log(path);
     graph.edges.clear();
     var n = graph.nodes.length;
+    // console.log(path.length);
     for (var i = 0; i < n; i++) {
+
         graph.edges.add({from: path[i], to: path[(i + 1) % n]});
+        console.log(graph.edges);
+        if(i<path.length-1){
+            dist[i] = (d1[path[i]] [path[i+1]]);
+        //    console.log();
+        //    graph.dist.add(d1[path[i]] [path[i+1]]);
+        }
+        // console.log(graph.edges);
+        // console.log(path[i]);
+        // console.log(path[(i+1)%n]);
+        // console.log(d1[path[i]][path[i+1]] );
+        // console.log()
+        // graph.dist.add(5);
     }
+
 }
 
 function displayState(state) {
+    // console.log(state);
+
+    console.log(dist);
     displayPath(state.path);
     info.innerHTML = '<b>Length:</b> ' + state.length.toFixed(3) + '<br>' +
-        '<b>Approximation:</b> ' + state.approximation.toFixed(3) + '<br>' +
-        '<b>Path:</b> ' + state.path.join(' > ');
+        // '<b>Approximation:</b> ' + state.approximation.toFixed(3) + '<br>' +
+        '<b>Path:</b> ' + state.path.join(' -> ');
 }
 
 function stopAnimation() {

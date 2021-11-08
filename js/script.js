@@ -6,7 +6,8 @@ var tree = {
 };
 var graph = {
     nodes: new vis.DataSet(),
-    edges: new vis.DataSet()
+    edges: new vis.DataSet(),
+    // dist : new Array(100)
 };
 var treeNetwork = new vis.Network(
     treeContainer,
@@ -19,4 +20,9 @@ var graphNetwork = new vis.Network(
     graphOptions
 );
 
-window.onload = function () {};
+window.onload = function () {
+
+
+    
+
+};

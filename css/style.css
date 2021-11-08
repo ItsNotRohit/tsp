@@ -15,6 +15,8 @@ body {
 }
 
 #gradient {
+    /* background-color: #d47878; */
+    /* background: linear-gradient(to right, #a8e2ca, #8face4, #c374f0); */
     background: linear-gradient(to right, #b7422d 0%, #d18b4f 10%, #e0ca82 20%, #aac382 30%, #87af7b 40%, #4e9682 50%, #488c94 60%, #487394 70%, #785fb1 80%, #a35680 90%, #b7422d 100%) repeat;
     background-size: 75% 100%;
     position: absolute;

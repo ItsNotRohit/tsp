@@ -30,7 +30,7 @@ function updateGraph() {
             id: i,
             label: ''+i,
             x: x,
-            y: y
+            y: -y
         })
     }
 }
@@ -79,13 +79,19 @@ window.onload = function () {
 };
 
 function smallGraph() {
-    textArea.value = '6\n' +
-        '169 113\n' +
-        '-156 77\n' +
-        '-67 -149\n' +
-        '45 21\n' +
-        '132 -111\n' +
-        '-88 -28\n';
+    // textArea.value = '6\n' +
+    //     '169 113\n' +
+    //     '-156 77\n' +
+    //     '-67 -149\n' +
+    //     '45 21\n' +
+    //     '132 -111\n' +
+    //     '-88 -28\n';
+    textArea.value = '4\n' +
+        '90 90\n' +
+        '0 0\n' +
+        '90 0\n' +
+        '0 90\n';
+
     updateGraph();
 }
 

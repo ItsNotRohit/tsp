@@ -68,9 +68,14 @@ var graphOptions = {
         enabled: false
     },
     edges: {
+        // color: {
+        //     color: '#18ab17',
+        //     highlight: '#18ab17',
+        //     hover: '#18ab17'
+        // },      
         arrows: {
             to: {
-                enabled: false
+                enabled:false
             },
             from: {
                 enabled: false
@@ -90,6 +95,7 @@ var graphOptions = {
         selectionWidth: 1,
         selfReferenceSize: 20,
         width: 3,
+        // color : 'black',
         widthConstraint: false
     },
     nodes: {
@@ -103,6 +109,7 @@ var graphOptions = {
             align: 'center',
             vadjust: -30
         },
+        
         shape: 'dot',
         size: 12
     },
